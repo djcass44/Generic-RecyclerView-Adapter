@@ -6,10 +6,13 @@ import android.view.ViewGroup
 
 /**
  *  RecyclerViewAdapter takes 2 arguments:
- *  @param layout -> The item layout to be inflated
+ *  @param layouts -> List of layouts
  *  @param callbacks -> The AdapterCallback interface which is used to set data to the UI and handle view clicks
  */
-class RecyclerViewAdapter<T>(private val layout: Int, private val callbacks: AdapterCallback<T>): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder<T>>() {
+class RecyclerViewAdapter<T>(private val layouts: List<Int>, private val callbacks: AdapterCallback<T>): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder<T>>() {
+    constructor(layout: Int, callbacks: AdapterCallback<T>): this(listOf(layout), callbacks)
+
+
     private val items = mutableListOf<T>()
 
     /**
@@ -40,7 +43,7 @@ class RecyclerViewAdapter<T>(private val layout: Int, private val callbacks: Ada
      *  Function to inflate the layout item
      */
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder<T> {
-        return ViewHolder(viewGroup.inflate(layout), callbacks)
+        return ViewHolder(viewGroup.inflate(layouts[viewType]), callbacks)
     }
 
     /**
@@ -59,7 +62,6 @@ class RecyclerViewAdapter<T>(private val layout: Int, private val callbacks: Ada
      *  The ViewHolder class which binds the data to the RecyclerView item
      */
     class ViewHolder<T>(private val view: View, private val callbacks: AdapterCallback<T>): RecyclerView.ViewHolder(view) {
-
         fun bind(item: T, position: Int) {
             callbacks.bindViews(view, item, position)
 
