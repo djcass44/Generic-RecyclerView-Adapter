@@ -14,7 +14,7 @@ interface AdapterCallback<T> {
      *  @param item -> The data item to be set to the layout. Cast this to your object type
      *  @param position -> The position of the item in the RecyclerView
      */
-    fun bindViews(view: View, item: T, position: Int)
+    fun bindViews(view: View, item: T, position: Int, viewType: Int = 0)
 
     /**
      * Function to handle clicks on the layout item

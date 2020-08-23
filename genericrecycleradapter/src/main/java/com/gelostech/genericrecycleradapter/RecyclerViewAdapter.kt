@@ -63,7 +63,7 @@ class RecyclerViewAdapter<T>(private val layouts: List<Int>, private val callbac
      */
     class ViewHolder<T>(private val view: View, private val callbacks: AdapterCallback<T>): RecyclerView.ViewHolder(view) {
         fun bind(item: T, position: Int) {
-            callbacks.bindViews(view, item, position)
+            callbacks.bindViews(view, item, position, itemViewType)
 
             view.setOnClickListener {
                 callbacks.onViewClicked(view, item)
