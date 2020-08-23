@@ -9,7 +9,7 @@ import android.view.ViewGroup
  *  @param layouts -> List of layouts
  *  @param callbacks -> The AdapterCallback interface which is used to set data to the UI and handle view clicks
  */
-class RecyclerViewAdapter<T>(private val layouts: List<Int>, private val callbacks: AdapterCallback<T>): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder<T>>() {
+open class RecyclerViewAdapter<T>(private val layouts: List<Int>, private val callbacks: AdapterCallback<T>): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder<T>>() {
     constructor(layout: Int, callbacks: AdapterCallback<T>): this(listOf(layout), callbacks)
 
 
@@ -37,6 +37,22 @@ class RecyclerViewAdapter<T>(private val layouts: List<Int>, private val callbac
     fun clearItems() {
         items.clear()
         notifyDataSetChanged()
+    }
+
+    /**
+     * Replace all existing items
+     */
+    fun setItems(items: List<T>) {
+        this.items.clear()
+        this.items.addAll(items)
+        if(items.size >= this.items.size) {
+            notifyItemRangeChanged(0, this.items.size)
+            notifyItemRangeInserted(this.items.size, items.size)
+        }
+        else {
+            notifyItemRangeChanged(0, items.size)
+            notifyItemRangeRemoved(items.size, this.items.size)
+        }
     }
 
     /**
