@@ -40,6 +40,13 @@ open class RecyclerViewAdapter<T>(private val layouts: List<Int>, private val ca
     }
 
     /**
+     * Retrieves an item by its index
+     */
+    fun getItem(position: Int): T {
+        return items[position]
+    }
+
+    /**
      * Replace all existing items
      */
     fun setItems(items: List<T>) {
